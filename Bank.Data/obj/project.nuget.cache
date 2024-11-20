@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "J7oAGAZVJ9JawFtKp1Da6KpGvhwV2yK3mthhwIp/Ay/+kaFIcRMRv8FO+bp2RnEhGWAKff+gy5ZTFO5tbB8O5Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\user1\\Desktop\\second year studies\\.net\\bank\\Bank\\Bank.Data\\Bank.Data.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user1\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

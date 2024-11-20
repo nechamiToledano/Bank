@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Bank.Service/1.0.0": {
+        "dependencies": {
+          "Bank.Core": "1.0.0"
+        },
+        "runtime": {
+          "Bank.Service.dll": {}
+        }
+      },
+      "Bank.Core/1.0.0": {
+        "runtime": {
+          "Bank.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Bank.Service/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Bank.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

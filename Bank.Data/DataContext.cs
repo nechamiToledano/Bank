@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using Bank.Core.Entities;
+using CsvHelper;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,22 +8,36 @@ using System.Linq;
 
 namespace Bank.Data
 {
-    public class DataContext {
+    public class DataContext:IDataContext {
+        public List<Account> Accounts { get; set; }
+        public List<CreditCard> CreditCards { get; set; }
+        public List<Customer> Customers { get; set; }
+        public List<Loan> Loans { get; set; }
+        public List<Operation> Operations { get; set; }
+        public DataContext()
+        {
+            Accounts = LoadData<Account>();
+            CreditCards =LoadData<CreditCard>();
+            Customers =  LoadData<Customer>();
+            Loans =LoadData<Loan>();
+            Operations = LoadData<Operation>();
+
+        }
         private string GetPath<T>()
         {
             return Path.Combine(AppContext.BaseDirectory, "Data", $"{typeof(T).Name}.csv");
         }
 
-        public List<T> LoadData<T>() where T : new()
+        public List<T> LoadData<T>() 
         {
             string path = GetPath<T>();
-            var result = new List<T>();
+            List<T> result;
 
             try
             {
                 if (!File.Exists(path))
                 {
-                    return result;
+                    return null;
                 }
 
                 using (var reader = new StreamReader(path))
@@ -42,7 +57,7 @@ namespace Bank.Data
         public bool SaveData<T>(List<T> data)
         {
             string path = GetPath<T>();
-
+            
             try
             {
                 using (var writer = new StreamWriter(path))

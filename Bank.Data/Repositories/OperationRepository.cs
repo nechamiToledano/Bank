@@ -12,9 +12,9 @@ using System.Security.Principal;
 namespace Bank.Data.Repositories
 {
     public class OperationRepository : IRepository<Operation>
-    {
-        readonly DataContext _dataContext;
-        public OperationRepository(DataContext dataContext)
+    {   
+        readonly IDataContext _dataContext;
+        public OperationRepository(IDataContext dataContext)
         {
 
             _dataContext = dataContext;
@@ -23,12 +23,12 @@ namespace Bank.Data.Repositories
 
         public IEnumerable<Operation> GetAllAsync()
         {
-            List<Operation> Operations = _dataContext.LoadData<Operation>();
-            return _dataContext.LoadData<Operation>() == null ? null : Operations.FindAll(o => o.Type==OperationType.Deposit );
+            List<Operation> operations = _dataContext.Operations;
+            return operations == null ? null : operations.FindAll(o => o.Type==OperationType.Deposit );
         }
         public Operation GetByIdAsync(int id)
         {
-            List<Operation> operations = _dataContext.LoadData<Operation>();
+            List<Operation> operations = _dataContext.Operations;
 
 
             return operations == null ? null : operations.Find(operation => operation.Id == id);
@@ -36,7 +36,7 @@ namespace Bank.Data.Repositories
         }
         public bool AddAsync(Operation Operation)
         {
-            List<Operation> operations = _dataContext.LoadData<Operation>();
+            List<Operation> operations = _dataContext.Operations;
 
             if (operations != null)
             {
@@ -48,7 +48,7 @@ namespace Bank.Data.Repositories
         }
         public bool UpdateAsync(Operation updateddOperation)
         {
-            List<Operation> operations = _dataContext.LoadData<Operation>();
+            List<Operation> operations = _dataContext.Operations;
             if (operations == null) { return false; }
             Operation operation = operations.Find(operation => operation.Id == updateddOperation.Id);
             if (operation == null)
@@ -60,7 +60,7 @@ namespace Bank.Data.Repositories
         }
         public bool DeleteAsync(int id)
         {
-            List<Operation> operations = _dataContext.LoadData<Operation>();
+            List<Operation> operations = _dataContext.Operations;
             if (operations == null) { return false; }
 
             var Operation = operations.Find(operation => operation.Id == id);

@@ -13,8 +13,8 @@ namespace Bank.Data.Repositories
 {
     public class AccountRepository : IRepository<Account>
     {
-        readonly DataContext _dataContext;
-        public AccountRepository(DataContext dataContext)
+        readonly IDataContext _dataContext;
+        public AccountRepository(IDataContext dataContext)
         {
 
             _dataContext = dataContext;
@@ -22,19 +22,19 @@ namespace Bank.Data.Repositories
         }
       
         public IEnumerable<Account> GetAllAsync() {
-            List<Account> accounts = _dataContext.LoadData<Account>();
-           return _dataContext.LoadData<Account>() == null?null:accounts.FindAll(a => a.Status == AccountStatus.Active);
+            List<Account> accounts = _dataContext.Accounts;
+           return accounts == null?null:accounts.FindAll(a => a.Status == AccountStatus.Active);
         }
         public Account GetByIdAsync(int id)
         {
-            List<Account> accounts = _dataContext.LoadData<Account>();
+            List<Account> accounts = _dataContext.Accounts;
             
 
             return accounts==null?null: accounts.Find(account => account.Id == id);
 
         }
        public bool AddAsync(Account account) {
-            List<Account> accounts = _dataContext.LoadData<Account>();
+            List<Account> accounts = _dataContext.Accounts;
 
             if (accounts != null)
             {
@@ -45,7 +45,7 @@ namespace Bank.Data.Repositories
             return false;
         }
        public bool UpdateAsync(Account newAccount) {
-            List<Account> accounts = _dataContext.LoadData<Account>();
+            List<Account> accounts = _dataContext.Accounts;
             if (accounts == null) { return false; }
             Account account = accounts.Find(account => account.Id == newAccount.Id);
             if (account == null)
@@ -60,7 +60,7 @@ namespace Bank.Data.Repositories
             return true;
         }
        public bool DeleteAsync(int id) {
-            List<Account> accounts = _dataContext.LoadData<Account>();
+            List<Account> accounts = _dataContext.Accounts;
             if (accounts == null) { return false; }
 
             var account = accounts.Find(account => account.Id == id);

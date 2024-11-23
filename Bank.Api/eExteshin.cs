@@ -22,7 +22,7 @@ namespace Bank.Api
             s.AddScoped<IService<Customer>, CustomerService>();
             s.AddScoped<IRepository<Operation>, OperationRepository>();
             s.AddScoped<IService<Operation>, OperationService>();
-            s.AddSingleton<DataContext>();
+            s.AddSingleton<IDataContext,DataContext>();
 
         }
     }

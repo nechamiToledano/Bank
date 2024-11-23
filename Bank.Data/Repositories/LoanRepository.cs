@@ -13,8 +13,8 @@ namespace Bank.Data.Repositories
 {
     public class LoanRepository : IRepository<Loan>
     {
-        readonly DataContext _dataContext;
-        public LoanRepository(DataContext dataContext)
+        readonly IDataContext _dataContext;
+        public LoanRepository(IDataContext dataContext)
         {
 
             _dataContext = dataContext;
@@ -23,12 +23,12 @@ namespace Bank.Data.Repositories
 
         public IEnumerable<Loan> GetAllAsync()
         {
-            List<Loan> Loans = _dataContext.LoadData<Loan>();
-            return _dataContext.LoadData<Loan>() == null ? null : Loans.FindAll(l => l.Status == LoanStatus.Active);
+            List<Loan> loans = _dataContext.Loans;
+            return loans == null ? null : loans.FindAll(l => l.Status == LoanStatus.Active);
         }
         public Loan GetByIdAsync(int id)
         {
-            List<Loan> loans = _dataContext.LoadData<Loan>();
+            List<Loan> loans = _dataContext.Loans;
 
 
             return loans == null ? null : loans.Find(loan =>loan.Id == id);
@@ -36,7 +36,7 @@ namespace Bank.Data.Repositories
         }
         public bool AddAsync(Loan loan)
         {
-            List<Loan> loans = _dataContext.LoadData<Loan>();
+            List<Loan> loans = _dataContext.Loans;
 
             if (loans != null)
             {
@@ -48,7 +48,7 @@ namespace Bank.Data.Repositories
         }
         public bool UpdateAsync(Loan updatedLoan)
         {
-            List<Loan> loans = _dataContext.LoadData<Loan>();
+            List<Loan> loans = _dataContext.Loans;
             if (loans == null) { return false; }
             Loan Loan = loans.Find(loan => loan.Id == updatedLoan.Id);
             if (Loan == null)
@@ -67,7 +67,7 @@ namespace Bank.Data.Repositories
         }
         public bool DeleteAsync(int id)
         {
-            List<Loan> loans = _dataContext.LoadData<Loan>();
+            List<Loan> loans = _dataContext.Loans;
             if (loans == null) { return false; }
 
             var Loan = loans.Find(loan => loan.Id == id);

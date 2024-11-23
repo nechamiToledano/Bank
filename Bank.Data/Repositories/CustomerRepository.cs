@@ -13,8 +13,8 @@ namespace Bank.Data.Repositories
 {
     public class CustomerRepository : IRepository<Customer>
     {
-        readonly DataContext _dataContext;
-        public CustomerRepository(DataContext dataContext)
+        readonly IDataContext _dataContext;
+        public CustomerRepository(IDataContext dataContext)
         {
 
             _dataContext = dataContext;
@@ -23,12 +23,12 @@ namespace Bank.Data.Repositories
 
         public IEnumerable<Customer> GetAllAsync()
         {
-            List<Customer> customers = _dataContext.LoadData<Customer>();
-            return _dataContext.LoadData<Customer>() == null ? null : customers.FindAll(c=> c.Status == CustomerStatus.Active);
+            List<Customer> customers = _dataContext.Customers;
+            return customers == null ? null : customers.FindAll(c=> c.Status == CustomerStatus.Active);
         }
         public Customer GetByIdAsync(int id)
         {
-            List<Customer> customers = _dataContext.LoadData<Customer>();
+            List<Customer> customers = _dataContext.Customers;
 
 
             return customers == null ? null : customers.Find(customer => customer.Id == id);
@@ -36,7 +36,7 @@ namespace Bank.Data.Repositories
         }
         public bool AddAsync(Customer Customer)
         {
-            List<Customer> customers = _dataContext.LoadData<Customer>();
+            List<Customer> customers = _dataContext.Customers;
 
             if (customers != null)
             {
@@ -48,7 +48,7 @@ namespace Bank.Data.Repositories
         }
         public bool UpdateAsync(Customer updatedCustomer)
         {
-            List<Customer> customers = _dataContext.LoadData<Customer>();
+            List<Customer> customers = _dataContext.Customers;
             if (customers == null) { return false; }
             Customer customer = customers.Find(Customer => Customer.Id == updatedCustomer.Id);
             if (customer == null)
@@ -68,7 +68,7 @@ namespace Bank.Data.Repositories
         }
         public bool DeleteAsync(int id)
         {
-            List<Customer> customers = _dataContext.LoadData<Customer>();
+            List<Customer> customers = _dataContext.Customers;
             if ( customers == null) { return false; }
 
             var customer = customers.Find(customer => customer.Id == id);

@@ -29,7 +29,7 @@ namespace Bank.Core.Entities
         public DateTime DateIssued { get; set; }
         public int CustomerId { get; set; }
         public double Amount { get; set; }
-        public DateOnly MaturityDate { get; set; }
+        public DateTime MaturityDate { get; set; }
         public double InterestRate { get; set; }
         public double OutstandingBalance { get; set; }
         public LoanStatus Status { get; set; }

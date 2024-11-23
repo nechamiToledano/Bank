@@ -32,12 +32,12 @@ namespace Bank.Core.Entities
             Amount = amount;
             AccountId = accountId;
             Type = type;
-            Date = DateTime.Now;
+           
         }
     
         public int Id { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        
         public decimal Amount { get; set; }
         public OperationType Type { get; set; }
         public int AccountId { get; set; }

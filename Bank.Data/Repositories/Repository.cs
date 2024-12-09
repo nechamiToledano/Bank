@@ -1,9 +1,12 @@
 ﻿using Bank.Core.InterfaceRepository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Bank.Data.Repositories
@@ -12,11 +15,12 @@ namespace Bank.Data.Repositories
     {
         private readonly DataContext _dataContext;
         private readonly DbSet<T> _dbSet;
-
-        public Repository(DataContext dataContext)
+        private readonly IRepositManger<T> _repositManger;
+        public Repository(DataContext dataContext, IRepositManger<T> repositManger)
         {
             _dataContext = dataContext;
             _dbSet = _dataContext.Set<T>();
+            _repositManger = repositManger;
         }
 
         public IEnumerable<T> GetAllAsync()
@@ -32,19 +36,19 @@ namespace Bank.Data.Repositories
         public  bool AddAsync(T entity)
         {
              _dbSet.AddAsync(entity);
-            return  _dataContext.SaveChanges() > 0;
+            return _repositManger.Save();
         }
 
         public  bool UpdateAsync(T entity)
         {
-            // Attach the entity to the DbContext if it's not already tracked
+           // Attach the entity to the DbContext if it's not already tracked
             _dbSet.Attach(entity);
 
             // Get the entity's entry in the DbContext
+            //var entry = _dataContext.Entry(_dbSet.Find(id));
             var entry = _dataContext.Entry(entity);
-
             // Iterate over all properties of the entity
-            foreach (var property in entry.Properties)
+            foreach (var property in entry.Properties) 
             {
                 var currentValue = property.CurrentValue;
                 var propertyType = property.Metadata.ClrType;
@@ -53,12 +57,13 @@ namespace Bank.Data.Repositories
                 // or not equal to its default value for value types
                 if (currentValue != null && !IsDefaultValue(currentValue, propertyType))
                 {
-                    property.IsModified = true;
+                    if(!property.Metadata.IsKey())
+                        property.IsModified = true;
                 }
             }
-
+           return  _repositManger.Save();
             // Save changes to the database
-            return  _dataContext.SaveChanges() > 0;
+           
         }
 
         // Helper method to check if a value equals the default for its type
@@ -82,7 +87,9 @@ namespace Bank.Data.Repositories
             }
 
             _dbSet.Remove(entity);
-            return _dataContext.SaveChanges() > 0;
+
+
+            return _repositManger.Save();
         }
     }
 }

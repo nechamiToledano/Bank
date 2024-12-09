@@ -10,19 +10,15 @@ namespace Bank.Api
 	{
 		public static void ServieDependencyInjector(this IServiceCollection s)
         {
-			
-			s.AddScoped<IRepository<Account>, Repository<Account>>();
-			s.AddScoped<IAccountService, AccountService>();
-            s.AddScoped<IRepository<Customer>, Repository<Customer>>();
-            s.AddScoped<ICustomerService, CustomerService>();
-            s.AddScoped<IRepository<CreditCard>, Repository<CreditCard>>();
-            s.AddScoped<ICreditCardService, CreditCardService>();
-            s.AddScoped<IRepository<Loan>, Repository<Loan>>();
-            s.AddScoped<ILoanService, LoanService>();
-            s.AddScoped<IRepository<Operation>, Repository<Operation>>();
 
+            s.AddScoped<IAccountService, AccountService>();
+            s.AddScoped<ICustomerService, CustomerService>();
+            s.AddScoped<ICreditCardService, CreditCardService>();
+            s.AddScoped<ILoanService, LoanService>();
             s.AddScoped<IOperationService, OperationService>();
-            
+
+            s.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            s.AddScoped(typeof(IRepositManger<>), typeof(RepositManager<>));
             s.AddDbContext<DataContext>();
 
 		}

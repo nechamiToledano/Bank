@@ -10,9 +10,9 @@ namespace Bank.Api.Controllers
     [ApiController]
     public class OperationController : ControllerBase
     {
-        readonly IService<Operation> _operationService;
+        readonly IOperationService _operationService;
 
-        public OperationController(IService<Operation> operationService)
+        public OperationController(IOperationService operationService)
         {
             _operationService = operationService;
         }
@@ -21,7 +21,7 @@ namespace Bank.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Operation>> Get()
         {
-            var operations = (List<Operation>)_operationService.GetAllAsync();
+            var operations = (List<Operation>)_operationService.GetAllOperations();
             return operations == null ? NotFound() : operations;
         }
 
@@ -30,7 +30,7 @@ namespace Bank.Api.Controllers
 
         public ActionResult<Operation> GetOperationById(int id)
         {
-            var operation = _operationService.GetAsync(id);
+            var operation = _operationService.GetOperation(id);
             return operation == null ? NotFound() : operation;
         }
 
@@ -39,7 +39,7 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> AddOperation([FromBody] Operation operation)
         {
 
-            return _operationService.AddAsync(operation) ? true : NotFound();
+            return _operationService.AddOperation(operation) ? true : NotFound();
         }
 
         // PUT: /Bank/Operation/MyOperation/{id}
@@ -49,14 +49,14 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> UpdateOperation([FromBody] Operation operation)
         {
 
-            return _operationService.UpdateAsync(operation) ? true : NotFound();
+            return _operationService.UpdateOperation(operation) ? true : NotFound();
 
         }
         [HttpDelete]
         public ActionResult<bool> DeleteOperation(int id)
         {
 
-            return _operationService.DeleteAsync(id) ? true : NotFound();
+            return _operationService.DeleteOperation(id) ? true : NotFound();
 
         }
     }

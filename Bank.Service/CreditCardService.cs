@@ -10,37 +10,37 @@ using System.Threading.Tasks;
 
 namespace Bank.Service
 {
-    public class CreditCardService : IService<CreditCard>
+    public class CreditCardService : ICreditCardService
     {
-        readonly IRepository<CreditCard> _CreditCardRepository;
-        public CreditCardService(IRepository<CreditCard> CreditCardRepository)
+        readonly IRepository<CreditCard> _creditCardRepository;
+        public CreditCardService(IRepository<CreditCard> creditCardRepository)
         {
-            _CreditCardRepository = CreditCardRepository;
-        }
-        public IEnumerable<CreditCard> GetAllAsync()
-        {
-
-            return _CreditCardRepository.GetAllAsync();
+            _creditCardRepository = creditCardRepository;
         }
 
-        public CreditCard GetAsync(int id)
+        public bool AddCard(CreditCard CreditCard)
         {
-            return _CreditCardRepository.GetByIdAsync(id);
+            return _creditCardRepository.AddAsync(CreditCard);
         }
 
-        public bool AddAsync(CreditCard CreditCard)
+        public bool DeleteCard(int id)
         {
-            return _CreditCardRepository.AddAsync(CreditCard);
+            return _creditCardRepository.DeleteAsync(id);
         }
 
-        public bool UpdateAsync(CreditCard CreditCard)
+        public CreditCard GetCard(int id)
         {
-            return _CreditCardRepository.UpdateAsync(CreditCard);
+            return _creditCardRepository.GetByIdAsync(id);
         }
 
-        public bool DeleteAsync(int id)
+        public IEnumerable<CreditCard> GetAllCards()
         {
-            return _CreditCardRepository.DeleteAsync(id);
+            return _creditCardRepository.GetAllAsync();
+        }
+
+        public bool UpdateCard(CreditCard CreditCard)
+        {
+            return _creditCardRepository.UpdateAsync(CreditCard);
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Bank.Api.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-         readonly IService<Customer> _customerService;
+         readonly ICustomerService _customerService;
 
-        public CustomerController(IService<Customer> customerService)
+        public CustomerController(ICustomerService customerService)
         {
             _customerService = customerService;
         }
@@ -20,7 +20,7 @@ namespace Bank.Api.Controllers
         // GET: /Bank/Customer
         [HttpGet]
         public ActionResult<IEnumerable<Customer>> Get() {
-            var customers = (List<Customer>)_customerService.GetAllAsync();
+            var customers = (List<Customer>)_customerService.GetAllCustomers();
             return customers == null ? NotFound() : customers;
         }
 
@@ -29,7 +29,7 @@ namespace Bank.Api.Controllers
 
         public ActionResult<Customer> GetCustomerById(int id)
         {
-            var customer = _customerService.GetAsync(id);
+            var customer = _customerService.GetCustomer(id);
             return customer == null ? NotFound() : customer;
         }
 
@@ -38,7 +38,7 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> AddCustomer([FromBody] Customer customer)
         {
             
-            return _customerService.AddAsync(customer)?true:NotFound();
+            return _customerService.AddCustomer(customer)?true:NotFound();
         }
 
         // PUT: /Bank/Customer/MyCustomer/{id}
@@ -48,14 +48,14 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> UpdateCustomer([FromBody] Customer customer)
         {
           
-            return _customerService.UpdateAsync(customer) ? true : NotFound();
+            return _customerService.UpdateCustomer(customer) ? true : NotFound();
              
         }
         [HttpDelete]
         public ActionResult<bool> DeleteCustomer(int id)
         {
            
-            return _customerService.DeleteAsync(id) ? true : NotFound();
+            return _customerService.DeleteCustomer(id) ? true : NotFound();
 
         }
     }

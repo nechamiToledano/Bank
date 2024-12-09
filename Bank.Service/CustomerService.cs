@@ -10,37 +10,37 @@ using System.Threading.Tasks;
 
 namespace Bank.Service
 {
-    public class CustomerService : IService<Customer>
+    public class CustomerService : ICustomerService
     {
-        readonly IRepository<Customer> _CustomerRepository;
-        public CustomerService(IRepository<Customer> CustomerRepository)
+        readonly IRepository<Customer> _customerRepository;
+        public CustomerService(IRepository<Customer> customerRepository)
         {
-            _CustomerRepository = CustomerRepository;
-        }
-        public IEnumerable<Customer> GetAllAsync()
-        {
-
-            return _CustomerRepository.GetAllAsync();
+            _customerRepository = customerRepository;
         }
 
-        public Customer GetAsync(int id)
+        public bool AddCustomer(Customer customer)
         {
-            return _CustomerRepository.GetByIdAsync(id);
+            return _customerRepository.AddAsync(customer);
         }
 
-        public bool AddAsync(Customer Customer)
+        public bool DeleteCustomer(int id)
         {
-            return _CustomerRepository.AddAsync(Customer);
+            return _customerRepository.DeleteAsync(id);
         }
 
-        public bool UpdateAsync(Customer Customer)
+        public Customer GetCustomer(int id)
         {
-            return _CustomerRepository.UpdateAsync(Customer);
+            return _customerRepository.GetByIdAsync(id);
         }
 
-        public bool DeleteAsync(int id)
+        public IEnumerable<Customer> GetAllCustomers()
         {
-            return _CustomerRepository.DeleteAsync(id);
+            return _customerRepository.GetAllAsync();
+        }
+
+        public bool UpdateCustomer(Customer customer)
+        {
+            return _customerRepository.UpdateAsync(customer);
         }
     }
 }

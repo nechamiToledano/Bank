@@ -10,9 +10,9 @@ namespace Bank.Api.Controllers
     [ApiController]
     public class LoanController : ControllerBase
     {
-        readonly IService<Loan> _loanService;
+        readonly ILoanService _loanService;
 
-        public LoanController(IService<Loan> loanService)
+        public LoanController(ILoanService loanService)
         {
             _loanService = loanService;
         }
@@ -21,7 +21,7 @@ namespace Bank.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Loan>> Get()
         {
-            var loans = (List<Loan>)_loanService.GetAllAsync();
+            var loans = (List<Loan>)_loanService.GetAllLoans();
             return loans == null ? NotFound() : loans;
         }
 
@@ -30,7 +30,7 @@ namespace Bank.Api.Controllers
 
         public ActionResult<Loan> GetLoanById(int id)
         {
-            var loan = _loanService.GetAsync(id);
+            var loan = _loanService.GetLoan(id);
             return loan == null ? NotFound() : loan;
         }
 
@@ -39,7 +39,7 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> AddLoan([FromBody] Loan loan)
         {
 
-            return _loanService.AddAsync(loan) ? true : NotFound();
+            return _loanService.AddLoan(loan) ? true : NotFound();
         }
 
         // PUT: /Bank/Loan/MyLoan/{id}
@@ -49,14 +49,14 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> UpdateLoan([FromBody] Loan loan)
         {
 
-            return _loanService.UpdateAsync(loan) ? true : NotFound();
+            return _loanService.UpdateLoan(loan) ? true : NotFound();
 
         }
         [HttpDelete]
         public ActionResult<bool> DeleteLoan(int id)
         {
 
-            return _loanService.DeleteAsync(id) ? true : NotFound();
+            return _loanService.DeleteLoan(id) ? true : NotFound();
 
         }
     }

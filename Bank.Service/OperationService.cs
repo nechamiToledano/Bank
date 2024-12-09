@@ -10,37 +10,37 @@ using System.Threading.Tasks;
 
 namespace Bank.Service
 {
-    public class OperationService : IService<Operation>
+    public class OperationService : IOperationService
     {
-        readonly IRepository<Operation> _OperationRepository;
-        public OperationService(IRepository<Operation> OperationRepository)
+        readonly IRepository<Operation> _operationRepository;
+        public OperationService(IRepository<Operation> operationRepository)
         {
-            _OperationRepository = OperationRepository;
-        }
-        public IEnumerable<Operation> GetAllAsync()
-        {
-
-            return _OperationRepository.GetAllAsync();
+            _operationRepository = operationRepository;
         }
 
-        public Operation GetAsync(int id)
+        public bool AddOperation(Operation operation)
         {
-            return _OperationRepository.GetByIdAsync(id);
+            return _operationRepository.AddAsync(operation);
         }
 
-        public bool AddAsync(Operation Operation)
+        public bool DeleteOperation(int id)
         {
-            return _OperationRepository.AddAsync(Operation);
+            return _operationRepository.DeleteAsync(id);
         }
 
-        public bool UpdateAsync(Operation Operation)
+        public Operation GetOperation(int id)
         {
-            return _OperationRepository.UpdateAsync(Operation);
+            return _operationRepository.GetByIdAsync(id);
         }
 
-        public bool DeleteAsync(int id)
+        public IEnumerable<Operation> GetAllOperations()
         {
-            return _OperationRepository.DeleteAsync(id);
+            return _operationRepository.GetAllAsync();
+        }
+
+        public bool UpdateOperation(Operation operation)
+        {
+            return _operationRepository.UpdateAsync(operation);
         }
     }
 }

@@ -1,29 +1,30 @@
 ﻿using Bank.Core.Entities;
-using Bank.Data;
-using Bank.Data.Repositories;
-using Bank.Service;
 using Bank.Core.InterfaceRepository;
 using Bank.Core.InterfaceService;
-using Microsoft.AspNetCore.Cors.Infrastructure;
+using Bank.Data.Repositories;
+using Bank.Service;
 
 namespace Bank.Api
 {
-    public static class eExteshin
-    {
-        public static void ServieDependencyInjector(this IServiceCollection s)
+	public static class eExteshin
+	{
+		public static void ServieDependencyInjector(this IServiceCollection s)
         {
-            s.AddScoped<IRepository<Account>, AccountRepository>();
-            s.AddScoped<IService<Account>, AccountService>();
-            s.AddScoped<IRepository<CreditCard>, CreditCardRepository>();
-            s.AddScoped<IService<CreditCard>, CreditCardService>();
-            s.AddScoped<IRepository<Loan>, LoanRepository>();
-            s.AddScoped<IService<Loan>, LoanService>();
-            s.AddScoped<IRepository<Customer>, CustomerRepository>();
-            s.AddScoped<IService<Customer>, CustomerService>();
-            s.AddScoped<IRepository<Operation>, OperationRepository>();
-            s.AddScoped<IService<Operation>, OperationService>();
-            s.AddSingleton<IDataContext,DataContext>();
+			
+			s.AddScoped<IRepository<Account>, Repository<Account>>();
+			s.AddScoped<IAccountService, AccountService>();
+            s.AddScoped<IRepository<Customer>, Repository<Customer>>();
+            s.AddScoped<ICustomerService, CustomerService>();
+            s.AddScoped<IRepository<CreditCard>, Repository<CreditCard>>();
+            s.AddScoped<ICreditCardService, CreditCardService>();
+            s.AddScoped<IRepository<Loan>, Repository<Loan>>();
+            s.AddScoped<ILoanService, LoanService>();
+            s.AddScoped<IRepository<Operation>, Repository<Operation>>();
 
-        }
-    }
+            s.AddScoped<IOperationService, OperationService>();
+            
+            s.AddDbContext<DataContext>();
+
+		}
+	}
 }

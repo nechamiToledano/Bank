@@ -10,37 +10,37 @@ using System.Threading.Tasks;
 
 namespace Bank.Service
 {
-    public class LoanService : IService<Loan>
+    public class LoanService : ILoanService
     {
-        readonly IRepository<Loan> _LoanRepository;
-        public LoanService(IRepository<Loan> LoanRepository)
+        readonly IRepository<Loan> _loanRepository;
+        public LoanService(IRepository<Loan> loanRepository)
         {
-            _LoanRepository = LoanRepository;
-        }
-        public IEnumerable<Loan> GetAllAsync()
-        {
-
-            return _LoanRepository.GetAllAsync();
+            _loanRepository = loanRepository;
         }
 
-        public Loan GetAsync(int id)
+        public bool AddLoan(Loan loan)
         {
-            return _LoanRepository.GetByIdAsync(id);
+            return _loanRepository.AddAsync(loan);
         }
 
-        public bool AddAsync(Loan Loan)
+        public bool DeleteLoan(int id)
         {
-            return _LoanRepository.AddAsync(Loan);
+            return _loanRepository.DeleteAsync(id);
         }
 
-        public bool UpdateAsync(Loan Loan)
+        public Loan GetLoan(int id)
         {
-            return _LoanRepository.UpdateAsync(Loan);
+            return _loanRepository.GetByIdAsync(id);
         }
 
-        public bool DeleteAsync(int id)
+        public IEnumerable<Loan> GetAllLoans()
         {
-            return _LoanRepository.DeleteAsync(id);
+            return _loanRepository.GetAllAsync();
+        }
+
+        public bool UpdateLoan(Loan loan)
+        {
+            return _loanRepository.UpdateAsync(loan);
         }
     }
 }

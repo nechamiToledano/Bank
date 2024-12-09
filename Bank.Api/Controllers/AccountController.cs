@@ -10,9 +10,9 @@ namespace Bank.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-         readonly IService<Account> _accountService;
+         readonly IAccountService _accountService;
 
-        public AccountController(IService<Account> accountService)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
@@ -20,16 +20,16 @@ namespace Bank.Api.Controllers
         // GET: /Bank/Account
         [HttpGet]
         public ActionResult<IEnumerable<Account>> Get() {
-            var accounts = (List<Account>)_accountService.GetAllAsync();
+            var accounts = (List<Account>)_accountService.GetAllAccounts();
             return accounts == null ? NotFound() : accounts;
         }
 
         // GET: /Bank/Account/{id}
-        [HttpGet("{number}")]
+        [HttpGet("{id}")]
 
         public ActionResult<Account> GetAccountById(int id)
         {
-            var account = _accountService.GetAsync(id);
+            var account = _accountService.GetAccount(id);
             return account == null ? NotFound() : account;
         }
 
@@ -38,7 +38,7 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> AddAccount([FromBody] Account account)
         {
             
-            return _accountService.AddAsync(account)?true:NotFound();
+            return _accountService.AddAccount(account)?true:NotFound();
         }
 
         // PUT: /Bank/Account/MyAccount/{id}
@@ -48,14 +48,14 @@ namespace Bank.Api.Controllers
         public ActionResult<bool> UpdateAccount([FromBody] Account account)
         {
           
-            return _accountService.UpdateAsync(account) ? true : NotFound();
+            return _accountService.UpdateAccount(account) ? true : NotFound();
              
         }
         [HttpDelete]
         public ActionResult<bool> DeleteAccount(int id)
         {
            
-            return _accountService.DeleteAsync(id) ? true : NotFound();
+            return _accountService.DeleteAccount(id) ? true : NotFound();
 
         }
     }

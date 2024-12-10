@@ -11,8 +11,8 @@ namespace Bank.Core.InterfaceService
     {
         IEnumerable<Customer> GetAllCustomers();
         Customer GetCustomer(int id);
-        bool AddCustomer(Customer customer);
-        bool UpdateCustomer(Customer customer);
+        Customer AddCustomer(Customer customer);
+        Customer UpdateCustomer(int id, Customer customer);
         bool DeleteCustomer(int id);
     }
 }

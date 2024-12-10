@@ -18,7 +18,7 @@ namespace Bank.Service
             _creditCardRepository = creditCardRepository;
         }
 
-        public bool AddCard(CreditCard CreditCard)
+        public CreditCard AddCard(CreditCard CreditCard)
         {
             return _creditCardRepository.AddAsync(CreditCard);
         }
@@ -38,9 +38,9 @@ namespace Bank.Service
             return _creditCardRepository.GetAllAsync();
         }
 
-        public bool UpdateCard(CreditCard CreditCard)
+        public CreditCard UpdateCard(int id, CreditCard CreditCard)
         {
-            return _creditCardRepository.UpdateAsync(CreditCard);
+            return _creditCardRepository.UpdateAsync(id,CreditCard);
         }
     }
 }

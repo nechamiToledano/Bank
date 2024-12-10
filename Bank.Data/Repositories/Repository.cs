@@ -15,8 +15,8 @@ namespace Bank.Data.Repositories
     {
         private readonly DataContext _dataContext;
         private readonly DbSet<T> _dbSet;
-        private readonly IRepositManger<T> _repositManger;
-        public Repository(DataContext dataContext, IRepositManger<T> repositManger)
+        private readonly IRepositManger _repositManger;
+        public Repository(DataContext dataContext, IRepositManger repositManger)
         {
             _dataContext = dataContext;
             _dbSet = _dataContext.Set<T>();
@@ -33,20 +33,31 @@ namespace Bank.Data.Repositories
             return  _dbSet.Find(id);
         }
 
-        public  bool AddAsync(T entity)
+        public  T AddAsync(T entity)
         {
-             _dbSet.AddAsync(entity);
-            return _repositManger.Save();
+             _dbSet.Add(entity);
+             _repositManger.Save();
+            return entity;
         }
 
-        public  bool UpdateAsync(T entity)
+        public  T UpdateAsync(int id,T entity)
         {
+
            // Attach the entity to the DbContext if it's not already tracked
             _dbSet.Attach(entity);
 
             // Get the entity's entry in the DbContext
             //var entry = _dataContext.Entry(_dbSet.Find(id));
-            var entry = _dataContext.Entry(entity);
+
+            var existingEntity = _dbSet.Find(id);
+            if (existingEntity == null)
+            {
+                return null;
+            }
+
+            var entry = _dataContext.Entry(existingEntity);
+
+
             // Iterate over all properties of the entity
             foreach (var property in entry.Properties) 
             {
@@ -61,7 +72,8 @@ namespace Bank.Data.Repositories
                         property.IsModified = true;
                 }
             }
-           return  _repositManger.Save();
+             _repositManger.Save();
+            return _dbSet.Find(id);
             // Save changes to the database
            
         }

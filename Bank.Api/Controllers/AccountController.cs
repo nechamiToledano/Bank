@@ -10,7 +10,7 @@ namespace Bank.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-         readonly IAccountService _accountService;
+        readonly IAccountService _accountService;
 
         public AccountController(IAccountService accountService)
         {
@@ -35,20 +35,20 @@ namespace Bank.Api.Controllers
 
         // POST: /Bank/Account/NewAccount
         [HttpPost]
-        public ActionResult<bool> AddAccount([FromBody] Account account)
+        public ActionResult<Account> AddAccount([FromBody] Account account)
         {
-            
-            return _accountService.AddAccount(account)?true:NotFound();
+            Account newAccount = _accountService.AddAccount(account);
+            return newAccount != null ? newAccount : NotFound();
         }
 
         // PUT: /Bank/Account/MyAccount/{id}
-        [HttpPut]
+        [HttpPut("{id}")]
    
 
-        public ActionResult<bool> UpdateAccount([FromBody] Account account)
+        public ActionResult<Account> UpdateAccount(int id,[FromBody] Account updatedAccount)
         {
-          
-            return _accountService.UpdateAccount(account) ? true : NotFound();
+          Account account = _accountService.UpdateAccount(id,updatedAccount);
+            return account != null ? account: NotFound();
              
         }
         [HttpDelete]

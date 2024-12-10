@@ -11,8 +11,8 @@ namespace Bank.Core.InterfaceService
     {
         IEnumerable<Operation> GetAllOperations();
         Operation GetOperation(int id);
-        bool AddOperation(Operation operation);
-        bool UpdateOperation(Operation operation);
+        Operation AddOperation(Operation operation);
+        Operation UpdateOperation(int id,Operation operation);
         bool DeleteOperation(int id);
     }
 }

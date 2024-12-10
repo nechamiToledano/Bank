@@ -11,8 +11,8 @@ namespace Bank.Core.InterfaceService
     {
         IEnumerable<Account> GetAllAccounts();
         Account GetAccount(int id);
-        bool AddAccount(Account account);
-        bool UpdateAccount(Account account);
+        Account AddAccount(Account account);
+        Account UpdateAccount(int id, Account account);
         bool DeleteAccount(int id);
     }
 }

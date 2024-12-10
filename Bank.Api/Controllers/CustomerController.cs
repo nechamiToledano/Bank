@@ -10,7 +10,7 @@ namespace Bank.Api.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-         readonly ICustomerService _customerService;
+        readonly ICustomerService _customerService;
 
         public CustomerController(ICustomerService customerService)
         {
@@ -19,13 +19,14 @@ namespace Bank.Api.Controllers
 
         // GET: /Bank/Customer
         [HttpGet]
-        public ActionResult<IEnumerable<Customer>> Get() {
+        public ActionResult<IEnumerable<Customer>> Get()
+        {
             var customers = (List<Customer>)_customerService.GetAllCustomers();
             return customers == null ? NotFound() : customers;
         }
 
         // GET: /Bank/Customer/{id}
-        [HttpGet("{number}")]
+        [HttpGet("{id}")]
 
         public ActionResult<Customer> GetCustomerById(int id)
         {
@@ -35,26 +36,26 @@ namespace Bank.Api.Controllers
 
         // POST: /Bank/Customer/NewCustomer
         [HttpPost]
-        public ActionResult<bool> AddCustomer([FromBody] Customer customer)
+        public ActionResult<Customer> AddCustomer([FromBody] Customer customer)
         {
-            
-            return _customerService.AddCustomer(customer)?true:NotFound();
+            Customer newCustomer = _customerService.AddCustomer(customer);
+            return newCustomer != null ? newCustomer : NotFound();
         }
 
         // PUT: /Bank/Customer/MyCustomer/{id}
-        [HttpPut]
-   
+        [HttpPut("{id}")]
 
-        public ActionResult<bool> UpdateCustomer([FromBody] Customer customer)
+
+        public ActionResult<Customer> UpdateCustomer(int id, [FromBody] Customer updatedCustomer)
         {
-          
-            return _customerService.UpdateCustomer(customer) ? true : NotFound();
-             
+            Customer customer = _customerService.UpdateCustomer(id, updatedCustomer);
+            return customer != null ? customer : NotFound();
+
         }
         [HttpDelete]
         public ActionResult<bool> DeleteCustomer(int id)
         {
-           
+
             return _customerService.DeleteCustomer(id) ? true : NotFound();
 
         }

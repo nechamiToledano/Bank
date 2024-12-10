@@ -18,7 +18,7 @@ namespace Bank.Service
             _customerRepository = customerRepository;
         }
 
-        public bool AddCustomer(Customer customer)
+        public Customer AddCustomer(Customer customer)
         {
             return _customerRepository.AddAsync(customer);
         }
@@ -38,9 +38,9 @@ namespace Bank.Service
             return _customerRepository.GetAllAsync();
         }
 
-        public bool UpdateCustomer(Customer customer)
+        public Customer UpdateCustomer(int id, Customer customer)
         {
-            return _customerRepository.UpdateAsync(customer);
+            return _customerRepository.UpdateAsync(id, customer);
         }
     }
 }

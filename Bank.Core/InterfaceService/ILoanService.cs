@@ -11,8 +11,8 @@ namespace Bank.Core.InterfaceService
     {
         IEnumerable<Loan> GetAllLoans();
         Loan GetLoan(int id);
-        bool AddLoan(Loan loan);
-        bool UpdateLoan(Loan loan   );
+        Loan AddLoan(Loan loan);
+        Loan UpdateLoan(int id,Loan loan   );
         bool DeleteLoan(int id);
     }
 }

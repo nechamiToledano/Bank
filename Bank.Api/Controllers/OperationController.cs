@@ -26,7 +26,7 @@ namespace Bank.Api.Controllers
         }
 
         // GET: /Bank/Operation/{id}
-        [HttpGet("{number}")]
+        [HttpGet("{id}")]
 
         public ActionResult<Operation> GetOperationById(int id)
         {
@@ -36,20 +36,20 @@ namespace Bank.Api.Controllers
 
         // POST: /Bank/Operation/NewOperation
         [HttpPost]
-        public ActionResult<bool> AddOperation([FromBody] Operation operation)
+        public ActionResult<Operation> AddOperation([FromBody] Operation operation)
         {
-
-            return _operationService.AddOperation(operation) ? true : NotFound();
+            Operation newOperation = _operationService.AddOperation(operation);
+            return newOperation != null ? newOperation : NotFound();
         }
 
         // PUT: /Bank/Operation/MyOperation/{id}
-        [HttpPut]
+        [HttpPut("{id}")]
 
 
-        public ActionResult<bool> UpdateOperation([FromBody] Operation operation)
+        public ActionResult<Operation> UpdateOperation(int id, [FromBody] Operation updatedOperation)
         {
-
-            return _operationService.UpdateOperation(operation) ? true : NotFound();
+            Operation operation = _operationService.UpdateOperation(id, updatedOperation);
+            return operation!=null ? operation : NotFound();
 
         }
         [HttpDelete]

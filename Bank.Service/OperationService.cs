@@ -18,7 +18,7 @@ namespace Bank.Service
             _operationRepository = operationRepository;
         }
 
-        public bool AddOperation(Operation operation)
+        public Operation AddOperation(Operation operation)
         {
             return _operationRepository.AddAsync(operation);
         }
@@ -38,9 +38,9 @@ namespace Bank.Service
             return _operationRepository.GetAllAsync();
         }
 
-        public bool UpdateOperation(Operation operation)
+        public Operation UpdateOperation(int id, Operation operation)
         {
-            return _operationRepository.UpdateAsync(operation);
+            return _operationRepository.UpdateAsync(id, operation);
         }
     }
 }

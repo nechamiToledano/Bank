@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 
 namespace Bank.Data.Repositories
 {
-    public class RepositManager<T>:IRepositManger<T> where T : class
+    public class RepositManager:IRepositManger
     {
       
             private readonly DataContext _context;
-            public IRepository<T> Repository { get; }
 
-            public RepositManager(DataContext context, IRepository<T> repository)
+            public RepositManager(DataContext context)
             {
                 _context = context;
-                Repository = repository;
             }
 
             public bool Save()

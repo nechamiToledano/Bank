@@ -1,5 +1,6 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
 using System.Security.Principal;
 
 namespace Bank.Core.Entities
@@ -17,25 +18,21 @@ namespace Bank.Core.Entities
     }
     public class Operation
     {
-        static private int identity;
         public Operation()
         {
             
         }
-        static Operation()
-        {
-            identity = 1;
-        }
+
         public Operation(string description,decimal amount,int accountId,OperationType type) {
-            Id = identity++;
             Description = description;
             Amount = amount;
             AccountId = accountId;
             Type = type;
            
         }
-    
+        [Key]
         public int Id { get; set; }
+
         public string Description { get; set; }
         
         public decimal Amount { get; set; }

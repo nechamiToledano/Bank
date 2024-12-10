@@ -18,7 +18,7 @@ namespace Bank.Api
             s.AddScoped<IOperationService, OperationService>();
 
             s.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            s.AddScoped(typeof(IRepositManger<>), typeof(RepositManager<>));
+            s.AddScoped<IRepositManger,RepositManager>();
             s.AddDbContext<DataContext>();
 
 		}

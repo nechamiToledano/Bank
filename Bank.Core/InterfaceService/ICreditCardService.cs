@@ -11,8 +11,8 @@ namespace Bank.Core.InterfaceService
     {
         IEnumerable<CreditCard> GetAllCards();
         CreditCard GetCard(int id);
-        bool AddCard(CreditCard creditCard);
-        bool UpdateCard(CreditCard creditCard);
+        CreditCard AddCard(CreditCard creditCard);
+        CreditCard UpdateCard(int id, CreditCard creditCard);
         bool DeleteCard(int id);
     }
 }

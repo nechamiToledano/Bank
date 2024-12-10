@@ -18,7 +18,7 @@ namespace Bank.Service
             _accountRepository = accountRepository;
         }
 
-        public bool AddAccount(Account account)
+        public Account AddAccount(Account account)
         {
             return _accountRepository.AddAsync(account);
         }
@@ -38,9 +38,9 @@ namespace Bank.Service
             return _accountRepository.GetAllAsync();
         }
 
-        public bool UpdateAccount(Account account)
+        public Account UpdateAccount(int id, Account account)
         {
-            return _accountRepository.UpdateAsync(account);
+            return _accountRepository.UpdateAsync(id, account);
         }
     }
 }

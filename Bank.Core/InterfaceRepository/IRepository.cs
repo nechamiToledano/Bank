@@ -7,8 +7,8 @@ namespace Bank.Core.InterfaceRepository
     {
        IEnumerable<T> GetAllAsync();
        T GetByIdAsync(int id);
-       bool AddAsync(T entity);
-       bool UpdateAsync(T entity);
+       T AddAsync(T entity);
+       T UpdateAsync(int id,T entity);
        bool DeleteAsync(int id);
     }
 }

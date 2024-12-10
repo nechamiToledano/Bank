@@ -26,7 +26,7 @@ namespace Bank.Api.Controllers
         }
 
         // GET: /Bank/Loan/{id}
-        [HttpGet("{number}")]
+        [HttpGet("{id}")]
 
         public ActionResult<Loan> GetLoanById(int id)
         {
@@ -36,20 +36,20 @@ namespace Bank.Api.Controllers
 
         // POST: /Bank/Loan/NewLoan
         [HttpPost]
-        public ActionResult<bool> AddLoan([FromBody] Loan loan)
+        public ActionResult<Loan> AddLoan([FromBody] Loan loan)
         {
-
-            return _loanService.AddLoan(loan) ? true : NotFound();
+            Loan newLoan = _loanService.AddLoan(loan);
+            return newLoan != null ? newLoan : NotFound();
         }
 
         // PUT: /Bank/Loan/MyLoan/{id}
-        [HttpPut]
+        [HttpPut("{id}")]
 
 
-        public ActionResult<bool> UpdateLoan([FromBody] Loan loan)
+        public ActionResult<Loan> UpdateLoan(int id, [FromBody] Loan updatedLoan)
         {
-
-            return _loanService.UpdateLoan(loan) ? true : NotFound();
+            Loan loan = _loanService.UpdateLoan(id, updatedLoan);
+            return loan != null ? loan : NotFound();
 
         }
         [HttpDelete]

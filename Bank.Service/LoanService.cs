@@ -18,7 +18,7 @@ namespace Bank.Service
             _loanRepository = loanRepository;
         }
 
-        public bool AddLoan(Loan loan)
+        public Loan AddLoan(Loan loan)
         {
             return _loanRepository.AddAsync(loan);
         }
@@ -38,9 +38,9 @@ namespace Bank.Service
             return _loanRepository.GetAllAsync();
         }
 
-        public bool UpdateLoan(Loan loan)
+        public Loan UpdateLoan(int id, Loan loan)
         {
-            return _loanRepository.UpdateAsync(loan);
+            return _loanRepository.UpdateAsync(id, loan);
         }
     }
 }

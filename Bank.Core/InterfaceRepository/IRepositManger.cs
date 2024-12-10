@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bank.Core.InterfaceRepository
 {
-    public interface IRepositManger<T> where T:class
-    {
-        IRepository<T> Repository { get; }
+    public interface IRepositManger { 
 
         bool Save();
     }

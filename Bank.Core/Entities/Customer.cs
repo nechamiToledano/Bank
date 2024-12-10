@@ -1,6 +1,8 @@
 ﻿
 
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Bank.Core.Entities
 {
     public enum CustomerStatus
@@ -14,7 +16,7 @@ namespace Bank.Core.Entities
     }
     public class Customer
     {
-        static int identity = 1;
+        
         public Customer()
         {
             
@@ -23,11 +25,8 @@ namespace Bank.Core.Entities
         {
           
         
-            Id = identity++;
-            //TzValid tzValid = new TzValid();
-            //ErrorTZ res;
-            //if(tzValid.ISOK(tz, out res))
-            //    Tz= tz;
+           
+        
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
@@ -38,7 +37,8 @@ namespace Bank.Core.Entities
             JoiningDate = DateTime.Now;
 
         }
-        public int Id { get; set; }
+        [Key]
+        public int Id { get;  set; }
         public string Tz { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -47,6 +47,6 @@ namespace Bank.Core.Entities
         public string Email { get; set; }
         public  CustomerStatus Status { get; set; }
         public int AccountId { get; set; }
-        public DateTime JoiningDate { get; set; }
+        public DateTime JoiningDate { get;  set; }
     }
 }

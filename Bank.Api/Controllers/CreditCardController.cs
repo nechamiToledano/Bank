@@ -1,7 +1,6 @@
 ﻿
 using Bank.Core.Entities;
 using Bank.Core.InterfaceService;
-using Bank.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -11,48 +10,54 @@ namespace Bank.Api.Controllers
     [ApiController]
     public class CreditCardController : ControllerBase
     {
-         readonly ICreditCardService _creditCardService;
+        readonly ICreditCardService _creditCardService;
 
         public CreditCardController(ICreditCardService creditCardService)
         {
             _creditCardService = creditCardService;
         }
 
+        // GET: /Bank/CreditCard
         [HttpGet]
-        public ActionResult<IEnumerable<CreditCard>> GetAllCreditCards()
+        public ActionResult<IEnumerable<CreditCard>> Get()
         {
-            var creditCards =( List<CreditCard>)_creditCardService.GetAllCards();
+            var creditCards = (List<CreditCard>)_creditCardService.GetAllCards();
             return creditCards == null ? NotFound() : creditCards;
         }
 
+        // GET: /Bank/CreditCard/{id}
         [HttpGet("{id}")]
-     
+
         public ActionResult<CreditCard> GetCreditCardById(int id)
         {
-            var card = _creditCardService.GetCard(id);
-            return card == null ? NotFound() : card;
+            var creditCard = _creditCardService.GetCard(id);
+            return creditCard == null ? NotFound() : creditCard;
         }
 
+        // POST: /Bank/CreditCard/NewCreditCard
         [HttpPost]
-        public ActionResult<bool> AddCreditCard([FromBody]CreditCard creditCard)
+        public ActionResult<CreditCard> AddCreditCard([FromBody] CreditCard creditCard)
         {
-           return  _creditCardService.AddCard(creditCard)?true:NotFound();
-           
+            CreditCard newCreditCard = _creditCardService.AddCard(creditCard);
+            return newCreditCard != null ? newCreditCard : NotFound();
         }
 
+        // PUT: /Bank/CreditCard/MyCreditCard/{id}
         [HttpPut("{id}")]
-        public ActionResult<bool> UpdateCreditCard(CreditCard creditCard)
+
+
+        public ActionResult<CreditCard> UpdateCreditCard(int id, [FromBody] CreditCard updatedCreditCard)
         {
+            CreditCard creditCard = _creditCardService.UpdateCard(id, updatedCreditCard);
+            return creditCard != null ? creditCard : NotFound();
 
-            return _creditCardService.UpdateCard(creditCard)?true:NotFound();
-            
         }
-
-        [HttpDelete()]
+        [HttpDelete]
         public ActionResult<bool> DeleteCreditCard(int id)
         {
-          return  _creditCardService.DeleteCard(id)?true:NotFound();
-           
+
+            return _creditCardService.DeleteCard(id) ? true : NotFound();
+
         }
     }
 }

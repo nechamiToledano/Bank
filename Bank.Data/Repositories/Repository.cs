@@ -47,8 +47,6 @@ namespace Bank.Data.Repositories
             _dbSet.Attach(entity);
 
             // Get the entity's entry in the DbContext
-            //var entry = _dataContext.Entry(_dbSet.Find(id));
-
             var existingEntity = _dbSet.Find(id);
             if (existingEntity == null)
             {

@@ -17,26 +17,6 @@ namespace Bank.Core.Entities
     public class Customer
     {
         
-        public Customer()
-        {
-            
-        }
-        public Customer(string tz,string firstName,string lastName,string phoneNumber,string address,string email,int accountId)
-        {
-          
-        
-           
-        
-            FirstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            Address = address;
-            Email = email;
-            Status=CustomerStatus.Active;
-            AccountId = accountId;
-            JoiningDate = DateTime.Now;
-
-        }
         [Key]
         public int Id { get;  set; }
         public string Tz { get; set; }
@@ -46,7 +26,9 @@ namespace Bank.Core.Entities
         public string Address { get; set; }
         public string Email { get; set; }
         public  CustomerStatus Status { get; set; }
-        public int AccountId { get; set; }
         public DateTime JoiningDate { get;  set; }
+        public List<CreditCard> CreditCards { get; set; }
+        public List<Loan> Loans { get; set; } 
+        public List<Account> Accounts { get; set; }
     }
 }

@@ -12,39 +12,29 @@ namespace Bank.Core.Entities
         Suspended,
         Closed,
     }
+
+    public enum Branch
+    {
+        Main = 1,
+        East = 2,
+        West = 3,
+        North = 4,
+        South = 5,
+        Online = 6
+    }
     public class Account
     {
-        public Account()
-        {
-            
-        }
-        public Account(int holderId,int branchId)
-        {
-            
-            
-            HolderId=holderId;
-            BranchId=branchId;   
-            Balance = 0;
-            Number =GenerateAccountNumber() ;
-            DateCreating = DateTime.Now;
-            Status=AccountStatus.Active;
-
-        }
-          static Random _random = new Random();
-        public string GenerateAccountNumber()
-        {
-            string timestamp = DateTime.Now.ToString("yyyyMMddHHmm");
-            string randomSuffix = _random.Next(1000, 9999).ToString(); // 4-digit suffix
-            return $"{timestamp}{randomSuffix}";
-        }
+      
+        
         [Key]
         public int Id { get;   set; }
-        [BindNever]
         public string Number { get;   set; }
-        public int BranchId { get; set; }
-        public int HolderId { get; set; }
+        public Branch Branch { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
         public decimal Balance { get; set; }
         public DateTime DateCreating { get;   set; }
         public AccountStatus Status { get; set; }
+        public List<Operation> Operations { get; set; }
     }
 }

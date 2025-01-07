@@ -32,14 +32,14 @@ namespace Bank.Data.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("BranchId")
+                    b.Property<int>("Branch")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreating")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("HolderId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -49,6 +49,8 @@ namespace Bank.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Accounts");
                 });
@@ -75,7 +77,7 @@ namespace Bank.Data.Migrations
                     b.Property<int>("CreditLimit")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("ExpirationMonth")
@@ -84,8 +86,8 @@ namespace Bank.Data.Migrations
                     b.Property<int>("ExpirationYear")
                         .HasColumnType("int");
 
-                    b.Property<int>("IssueDate")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("IssueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -99,6 +101,8 @@ namespace Bank.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("CreditCards");
                 });
 
@@ -109,9 +113,6 @@ namespace Bank.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -179,6 +180,8 @@ namespace Bank.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Loans");
                 });
 
@@ -205,7 +208,67 @@ namespace Bank.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.ToTable("Operations");
+                });
+
+            modelBuilder.Entity("Bank.Core.Entities.Account", b =>
+                {
+                    b.HasOne("Bank.Core.Entities.Customer", "Customer")
+                        .WithMany("Accounts")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Bank.Core.Entities.CreditCard", b =>
+                {
+                    b.HasOne("Bank.Core.Entities.Customer", "Customer")
+                        .WithMany("CreditCards")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Bank.Core.Entities.Loan", b =>
+                {
+                    b.HasOne("Bank.Core.Entities.Customer", "Customer")
+                        .WithMany("Loans")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Bank.Core.Entities.Operation", b =>
+                {
+                    b.HasOne("Bank.Core.Entities.Account", "Account")
+                        .WithMany("Operations")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Bank.Core.Entities.Account", b =>
+                {
+                    b.Navigation("Operations");
+                });
+
+            modelBuilder.Entity("Bank.Core.Entities.Customer", b =>
+                {
+                    b.Navigation("Accounts");
+
+                    b.Navigation("CreditCards");
+
+                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }
